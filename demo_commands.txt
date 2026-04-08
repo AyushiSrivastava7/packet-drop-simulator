@@ -1,0 +1,67 @@
+===========================
+PACKET DROP SIMULATOR DEMO
+===========================
+
+STEP 1: Start Mininet topology
+--------------------------------
+sudo mn --topo single,3
+
+This creates:
+h1, h2, h3 connected to switch s1
+
+
+STEP 2: Check initial connectivity
+-----------------------------------
+mininet> pingall
+
+Expected output:
+0% packet loss (all hosts reachable)
+
+
+STEP 3: Add packet drop rule
+----------------------------
+Open new terminal and run:
+
+sudo ovs-ofctl add-flow s1 "in_port=1,actions=drop"
+
+OR run script:
+sh add_drop_rule.sh
+
+
+STEP 4: Test after applying drop rule
+--------------------------------------
+mininet> pingall
+
+Expected output:
+Packet loss observed (some hosts unreachable)
+
+
+STEP 5: Check individual connectivity
+--------------------------------------
+mininet> h1 ping h2
+mininet> h1 ping h3
+
+
+STEP 6: View flow table (proof of SDN rules)
+--------------------------------------------
+sudo ovs-ofctl dump-flows s1
+
+
+STEP 7: Remove flow rules (restore network)
+-------------------------------------------
+sh remove_rules.sh
+
+OR
+sudo ovs-ofctl del-flows s1
+
+
+STEP 8: Final verification
+--------------------------
+mininet> pingall
+
+Expected output:
+0% packet loss again
+
+===========================
+END OF DEMO
+===========================
