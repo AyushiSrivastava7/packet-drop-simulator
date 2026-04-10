@@ -8,7 +8,7 @@ This project demonstrates a Software Defined Networking (SDN) based Packet Drop 
 ## Setup / Execution Steps
 
 ### 1. Start Mininet Topology
-sudo mn --topo single,3 --mac --switch ovsk --controller none
+sudo mn --topo single,3
 
 ### 2. Check Network Connectivity
 mininet> pingall  
